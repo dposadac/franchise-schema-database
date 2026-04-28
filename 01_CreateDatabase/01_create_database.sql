@@ -4,8 +4,8 @@
 -- Idempotente: no falla si ya existe
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS franchise_db
+CREATE DATABASE IF NOT EXISTS franchisedb
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-USE franchise_db;
+USE franchisedb;

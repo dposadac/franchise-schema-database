@@ -14,6 +14,8 @@ franchise-schema-database/
 ```
 
 ## Modelo de datos
+# Diagrama Entidad relación (E-R)
+![alt text](E-R_1.png)
 
 ### Tablas catálogo
 
@@ -48,7 +50,11 @@ Ejecutar los scripts en el siguiente orden:
 mysql -u <usuario> -p < 01_CreateDatabase/01_create_database.sql
 
 # 2. Crear tablas y relaciones
-mysql -u <usuario> -p franchise_db < 02_CreateTable/01_create_tables.sql
+mysql -u <usuario> -p franchisedb < 02_CreateTable/01_create_tables.sql
+
+
+# 3. Ejecutar el script de carga de datos
+mysql -u <usuario> -p franchisedb < 03_ScriptCargas/01_insert_estados.sql
 ```
 
 ## Requisitos

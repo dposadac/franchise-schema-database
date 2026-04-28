@@ -5,18 +5,18 @@
 -- IDs de tipo UUID (CHAR(36))
 -- ============================================================
 
-USE franchise_db;
+USE franchisedb;
 
 -- ------------------------------------------------------------
 -- Franquicia
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS Franquicia (
-    IdFranquicia     CHAR(36)     NOT NULL DEFAULT (UUID()),
+    IdFranquicia     CHAR(36)     UNIQUE NOT NULL DEFAULT (UUID()),
     Nombre           VARCHAR(150) NOT NULL,
-    FechaCreacion    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FechaActualizacion DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP
+    FechaCreacion    DATETIME     NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME   NULL DEFAULT CURRENT_TIMESTAMP
                                            ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT pk_franquicia PRIMARY KEY (IdFranquicia)
+    CONSTRAINT pk_franquicia PRIMARY KEY (IdFranquicia),
 ) ENGINE=InnoDB;
 
 -- ------------------------------------------------------------
@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS Franquicia (
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS Sucursal (
     IdSucursal       CHAR(36)     NOT NULL DEFAULT (UUID()),
-    Nombre           VARCHAR(150) NOT NULL,
-    FechaCreacion    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FechaActualizacion DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP
+    Nombre           VARCHAR(150) UNIQUE NOT NULL,
+    FechaCreacion    DATETIME     NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME   NULL DEFAULT CURRENT_TIMESTAMP
                                            ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT pk_sucursal PRIMARY KEY (IdSucursal)
 ) ENGINE=InnoDB;
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS Sucursal (
 CREATE TABLE IF NOT EXISTS Afiliacion (
     IdSucursal       CHAR(36)  NOT NULL,
     IdFranquicia     CHAR(36)  NOT NULL,
-    FechaCreacion    DATETIME  NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FechaActualizacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    FechaCreacion    DATETIME  NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME NULL DEFAULT CURRENT_TIMESTAMP
                                          ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT pk_afiliacion        PRIMARY KEY (IdSucursal, IdFranquicia),
     CONSTRAINT fk_afil_sucursal     FOREIGN KEY (IdSucursal)
@@ -65,8 +65,8 @@ CREATE TABLE IF NOT EXISTS Producto (
     IdProducto       CHAR(36)     NOT NULL DEFAULT (UUID()),
     Nombre           VARCHAR(150) NOT NULL,
     Activo           TINYINT(1)   NOT NULL DEFAULT 1,
-    FechaCreacion    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FechaActualizacion DATETIME   NOT NULL DEFAULT CURRENT_TIMESTAMP
+    FechaCreacion    DATETIME     NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME   NULL DEFAULT CURRENT_TIMESTAMP
                                            ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT pk_producto PRIMARY KEY (IdProducto)
 ) ENGINE=InnoDB;
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS Inventario (
     IdProducto       CHAR(36)  NOT NULL,
     CantidadStock    INT       NOT NULL DEFAULT 0,
     IdEstadoPago     CHAR(36)  NOT NULL,
-    FechaCreacion    DATETIME  NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FechaActualizacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    FechaCreacion    DATETIME  NULL DEFAULT CURRENT_TIMESTAMP,
+    FechaActualizacion DATETIME NULL DEFAULT CURRENT_TIMESTAMP
                                          ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT pk_inventario        PRIMARY KEY (IdSucursal, IdProducto),
     CONSTRAINT fk_inv_sucursal      FOREIGN KEY (IdSucursal)
